@@ -19,7 +19,7 @@ export default function LandingPage() {
         <h1 className="text-3xl font-bold">Welcome to Chronix Bastion Tracker</h1>
         <button
           onClick={() => signIn("discord")}
-          className="px-6 py-3 rounded bg-emerald-600 hover:bg-emerald-500 font-medium"
+          className="px-6 py-3 rounded b-emerald-600 hover:bg-emerald-500 font-medium"
         >
           Sign in with Discord
         </button>
