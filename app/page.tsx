@@ -8,7 +8,7 @@ export default function LandingPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // If already logged in → redirect to dashboard
+  // If logged in → go to dashboard
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/dashboard");
@@ -24,64 +24,89 @@ export default function LandingPage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-zinc-950 text-zinc-100">
-      {/* Hero Section */}
-      <section className="flex flex-1">
-        {/* Left: Branding */}
-        <div className="flex-1 flex flex-col justify-center px-16 py-20">
-          <h1 className="text-5xl font-bold mb-6">Chronix Bastion Tracker</h1>
-          <p className="text-lg text-zinc-400 max-w-xl mb-8">
-            A campaign management tool built for Dungeon Masters. Track bastions,
-            manage facilities, assign defenders, and keep events and turns
-            organized — all in one simple dashboard.
+    <main className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-zinc-100">
+      {/* Hero */}
+      <section className="relative flex flex-col items-center justify-center text-center py-24 px-6">
+        {/* Logo + slogan */}
+        <img src="/logo.png" alt="Chronix Logo" className="h-24 w-auto mb-4" />
+        <p className="text-zinc-400 text-lg mb-6">
+          Strongholds Made Simple
+        </p>
+
+        <h1 className="text-5xl font-bold mb-6">
+          Track and Manage Your Bastions with Ease
+        </h1>
+        <p className="text-lg text-zinc-400 max-w-2xl mb-10">
+          Chronix is your all-in-one Bastion Tracker for Dungeon Masters. Manage
+          facilities, defenders, orders, turns, and campaign events — all in a
+          sleek, organized dashboard.
+        </p>
+        <button
+          onClick={() => signIn("discord")}
+          className="px-8 py-4 rounded bg-emerald-600 hover:bg-emerald-500 font-medium transition shadow-lg"
+        >
+          Sign in with Discord
+        </button>
+      </section>
+
+      {/* Features */}
+      <section className="py-24 px-6 max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="p-6 bg-zinc-900/70 backdrop-blur-md rounded-xl border border-zinc-800 shadow-md">
+          <h3 className="text-xl font-semibold mb-2">🏰 Bastion Overview</h3>
+          <p className="text-zinc-400">
+            See every bastion at a glance — track status, resources, and key
+            details in one place.
           </p>
-
-          <div className="grid grid-cols-2 gap-6 max-w-2xl">
-            <div className="p-6 bg-zinc-900 rounded-lg border border-zinc-800">
-              <h3 className="font-semibold text-xl mb-2">🏰 Bastion Overview</h3>
-              <p className="text-zinc-400 text-sm">
-                View all of your bastions at a glance — facilities, defenders,
-                and current status.
-              </p>
-            </div>
-            <div className="p-6 bg-zinc-900 rounded-lg border border-zinc-800">
-              <h3 className="font-semibold text-xl mb-2">⚒️ Facilities</h3>
-              <p className="text-zinc-400 text-sm">
-                Manage buildings, upgrades, and resources that shape your
-                bastion’s growth.
-              </p>
-            </div>
-            <div className="p-6 bg-zinc-900 rounded-lg border border-zinc-800">
-              <h3 className="font-semibold text-xl mb-2">🛡️ Defenders</h3>
-              <p className="text-zinc-400 text-sm">
-                Track your defenders, assign tasks, and ensure your bastion is
-                well protected.
-              </p>
-            </div>
-            <div className="p-6 bg-zinc-900 rounded-lg border border-zinc-800">
-              <h3 className="font-semibold text-xl mb-2">📜 Orders & Turns</h3>
-              <p className="text-zinc-400 text-sm">
-                Record orders, log events, and manage campaign turns with ease.
-              </p>
-            </div>
-          </div>
         </div>
-
-        {/* Right: Login */}
-        <div className="w-full max-w-md flex items-center justify-center bg-zinc-900 border-l border-zinc-800">
-          <div className="p-10 rounded-lg w-full">
-            <h2 className="text-2xl font-semibold mb-6">Get Started</h2>
-            <p className="text-zinc-400 mb-6">
-              Sign in with Discord to access your Bastion Tracker dashboard.
-            </p>
-            <button
-              onClick={() => signIn("discord")}
-              className="w-full px-6 py-3 rounded bg-emerald-600 hover:bg-emerald-500 font-medium transition"
-            >
-              Sign in with Discord
-            </button>
-          </div>
+        <div className="p-6 bg-zinc-900/70 backdrop-blur-md rounded-xl border border-zinc-800 shadow-md">
+          <h3 className="text-xl font-semibold mb-2">⚒️ Facilities</h3>
+          <p className="text-zinc-400">
+            Manage your buildings and upgrades. Plan your stronghold’s growth
+            and maximize efficiency.
+          </p>
         </div>
+        <div className="p-6 bg-zinc-900/70 backdrop-blur-md rounded-xl border border-zinc-800 shadow-md">
+          <h3 className="text-xl font-semibold mb-2">🛡️ Defenders</h3>
+          <p className="text-zinc-400">
+            Track defenders and assign tasks to keep your bastion safe from
+            threats.
+          </p>
+        </div>
+        <div className="p-6 bg-zinc-900/70 backdrop-blur-md rounded-xl border border-zinc-800 shadow-md">
+          <h3 className="text-xl font-semibold mb-2">📜 Orders</h3>
+          <p className="text-zinc-400">
+            Record player and DM orders, ensuring nothing gets lost between
+            turns.
+          </p>
+        </div>
+        <div className="p-6 bg-zinc-900/70 backdrop-blur-md rounded-xl border border-zinc-800 shadow-md">
+          <h3 className="text-xl font-semibold mb-2">⏳ Turns</h3>
+          <p className="text-zinc-400">
+            Keep campaigns flowing smoothly by managing turns and tracking time
+            across bastions.
+          </p>
+        </div>
+        <div className="p-6 bg-zinc-900/70 backdrop-blur-md rounded-xl border border-zinc-800 shadow-md">
+          <h3 className="text-xl font-semibold mb-2">📖 Logs & Events</h3>
+          <p className="text-zinc-400">
+            Chronicle every order, defender action, and event with permanent
+            logs for your campaign history.
+          </p>
+        </div>
+      </section>
+
+      {/* Call to action */}
+      <section className="py-20 text-center border-t border-zinc-800">
+        <h2 className="text-3xl font-bold mb-4">Ready to Command Your Bastions?</h2>
+        <p className="text-zinc-400 mb-6">
+          Sign in with Discord and bring order to your campaign today.
+        </p>
+        <button
+          onClick={() => signIn("discord")}
+          className="px-8 py-4 rounded bg-emerald-600 hover:bg-emerald-500 font-medium transition shadow-lg"
+        >
+          Get Started
+        </button>
       </section>
     </main>
   );
