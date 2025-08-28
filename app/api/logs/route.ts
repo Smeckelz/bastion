@@ -3,9 +3,9 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const logs = await prisma.log.findMany({ include: { bastion: true } });
-    return NextResponse.json(logs);
+    const facilities = await prisma.facility.findMany({ include: { bastion: true } });
+    return NextResponse.json(facilities);
   } catch {
-    return NextResponse.json({ error: "Failed to fetch logs" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch facilities" }, { status: 500 });
   }
 }
