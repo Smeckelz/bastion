@@ -25,9 +25,3 @@
     "typescript": "^5"
   }
 }
-{
-  "dev": "next dev --turbopack",
-  "build": "next build --turbopack",
-  "start": "next start",
-  "postinstall": "prisma generate"
-}
