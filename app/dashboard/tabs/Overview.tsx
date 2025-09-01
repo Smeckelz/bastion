@@ -1,12 +1,9 @@
-"use client";
-
+// FILE: app/dashboard/tabs/Overview.tsx
 export default function OverviewTab() {
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-2">Overview</h2>
-      <p className="text-zinc-300">
-        Welcome to the Chronix Bastion Tracker. Select a tab above to view data.
-      </p>
+    <div className="space-y-4">
+      <h2 className="text-xl font-bold">Overview</h2>
+      <p className="text-zinc-300">High-level snapshot of your Bastion, turns, and resources.</p>
     </div>
   );
 }

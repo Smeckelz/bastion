@@ -1,23 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
+// FILE: app/dashboard/tabs/Orders.tsx
 export default function OrdersTab() {
-  const [data, setData] = useState<any>(null);
-
-  useEffect(() => {
-    fetch("/api/orders")
-      .then((res) => res.json())
-      .then(setData)
-      .catch(() => setData({ error: "Failed to load orders" }));
-  }, []);
-
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-2">Orders</h2>
-      <pre className="bg-zinc-900 p-4 rounded text-sm overflow-x-auto">
-        {data ? JSON.stringify(data, null, 2) : "Loading..."}
-      </pre>
+    <div className="space-y-3">
+      <h2 className="text-xl font-bold">Orders</h2>
+      <p className="text-zinc-300">Queue tasks, supply runs, and crafting jobs.</p>
     </div>
   );
 }

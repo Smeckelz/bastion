@@ -1,3 +1,4 @@
+// FILE: app/dashboard/page.tsx
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -27,7 +28,7 @@ const tabs = [
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
-  const [activeTab, setActiveTab] = useState("Overview");
+  const [activeTab, setActiveTab] = useState<string>("Overview");
 
   // Loading state
   if (status === "loading") {
@@ -44,7 +45,7 @@ export default function DashboardPage() {
       <main className="h-screen flex flex-col items-center justify-center bg-zinc-950 text-zinc-100 space-y-4">
         <h1 className="text-3xl font-bold">Welcome to Chronix Bastion Tracker</h1>
         <button
-          onClick={() => signIn("discord")}
+          onClick={() => signIn("discord", { callbackUrl: "/dashboard" })}
           className="px-6 py-3 rounded bg-emerald-600 hover:bg-emerald-500 font-medium"
         >
           Sign in with Discord
@@ -59,10 +60,10 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="p-6 flex items-center justify-between border-b border-zinc-800">
         <h1 className="text-2xl font-bold">
-          Chronix Bastion Tracker — Hello, {session.user?.name}
+          Chronix Bastion Tracker — Hello, {session.user?.name ?? "Adventurer"}
         </h1>
         <button
-          onClick={() => signOut()}
+          onClick={() => signOut({ callbackUrl: "/" })}
           className="px-4 py-2 rounded bg-red-600 hover:bg-red-500"
         >
           Sign out
