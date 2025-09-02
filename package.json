@@ -1,3 +1,4 @@
+// FILE: package.json
 {
   "name": "nextjs",
   "version": "0.1.0",
@@ -14,7 +15,9 @@
     "next-auth": "^4.24.11",
     "prisma": "^6.15.0",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "swr": "^2.2.5",           // ✅ required by dashboard tabs
+    "bcryptjs": "^2.4.3"       // ✅ required by credentials login
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
