@@ -1,11 +1,27 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+// FILE: app/api/orders/route.ts
+export const runtime = "nodejs";
 
-export async function GET() {
-  try {
-    const orders = await prisma.order.findMany({ include: { bastion: true } });
-    return NextResponse.json(orders);
-  } catch {
-    return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 });
-  }
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const bastionId = Number(searchParams.get("bastionId"));
+  if (!bastionId) return NextResponse.json([]);
+
+  const items = await prisma.order.findMany({
+    where: { bastionId },
+    orderBy: { createdAt: "asc" },
+  });
+  return NextResponse.json(items);
+}
+
+export async function POST(req: Request) {
+  const { bastionId, title, status } = await req.json();
+  if (!bastionId || !title) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+
+  const item = await prisma.order.create({
+    data: { bastionId, title, status: status || "queued" },
+  });
+  return NextResponse.json(item);
 }

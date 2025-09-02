@@ -1,82 +1,57 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 model User {
-  id        String   @id @default(cuid())
-  discordId String   @unique
-  name      String?
-  image     String?
-  bastions  Bastion[]
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  accounts      Account[]
+  sessions      Session[]
+  bastions      Bastion[]
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Bastion {
-  id          String      @id @default(cuid())
-  name        String
-  ownerId     String
-  owner       User        @relation(fields: [ownerId], references: [id])
-  facilities  Facility[]
-  defenders   Defender[]
-  orders      Order[]
-  events      Event[]
-  turns       Turn[]
-  logs        Log[]
-  createdAt   DateTime    @default(now())
-}
-
-model Facility {
-  id         String   @id @default(cuid())
-  name       String
-  type       String
-  bastionId  String
-  bastion    Bastion  @relation(fields: [bastionId], references: [id])
-  createdAt  DateTime @default(now())
-}
-
-model Defender {
-  id         String   @id @default(cuid())
-  name       String
-  role       String
-  bastionId  String
-  bastion    Bastion  @relation(fields: [bastionId], references: [id])
-  createdAt  DateTime @default(now())
-}
-
-model Order {
-  id          String   @id @default(cuid())
-  description String
-  status      String   @default("pending")
-  bastionId   String
-  bastion     Bastion  @relation(fields: [bastionId], references: [id])
-  createdAt   DateTime @default(now())
-}
-
-model Event {
-  id         String   @id @default(cuid())
-  title      String
-  details    String?
-  bastionId  String
-  bastion    Bastion  @relation(fields: [bastionId], references: [id])
-  createdAt  DateTime @default(now())
-}
-
-model Turn {
-  id         String   @id @default(cuid())
-  number     Int
-  bastionId  String
-  bastion    Bastion  @relation(fields: [bastionId], references: [id])
-  createdAt  DateTime @default(now())
-}
-
-model Log {
-  id         String   @id @default(cuid())
-  message    String
-  bastionId  String
-  bastion    Bastion  @relation(fields: [bastionId], references: [id])
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  name      String
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
 }
