@@ -1,57 +1,85 @@
+// FILE: prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // <-- make sure this is set in Vercel
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-
-  accounts      Account[]
-  sessions      Session[]
-  bastions      Bastion[]
-
+  id        String   @id @default(cuid()) // Discord users can also use their Discord ID if you upsert with it
+  name      String?
+  email     String?  @unique
+  password  String?  // null for Discord-only users
+  image     String?
+  bastions  Bastion[]
   createdAt DateTime @default(now())
-}
-
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?  @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
 }
 
 model Bastion {
-  id        Int      @id @default(autoincrement())
-  name      String
-  ownerId   String
-  owner     User     @relation(fields: [ownerId], references: [id])
-  createdAt DateTime @default(now())
+  id         Int         @id @default(autoincrement())
+  name       String
+  ownerId    String
+  owner      User        @relation(fields: [ownerId], references: [id])
+  facilities Facility[]
+  defenders  Defender[]
+  orders     Order[]
+  events     Event[]
+  turns      Turn[]
+  logs       Log[]
+  createdAt  DateTime    @default(now())
+}
+
+model Facility {
+  id         Int      @id @default(autoincrement())
+  bastionId  Int
+  bastion    Bastion  @relation(fields: [bastionId], references: [id], onDelete: Cascade)
+  name       String
+  level      Int      @default(1)
+  createdAt  DateTime @default(now())
+}
+
+model Defender {
+  id         Int      @id @default(autoincrement())
+  bastionId  Int
+  bastion    Bastion  @relation(fields: [bastionId], references: [id], onDelete: Cascade)
+  name       String
+  role       String?
+  createdAt  DateTime @default(now())
+}
+
+model Order {
+  id         Int      @id @default(autoincrement())
+  bastionId  Int
+  bastion    Bastion  @relation(fields: [bastionId], references: [id], onDelete: Cascade)
+  title      String
+  status     String   @default("queued")
+  createdAt  DateTime @default(now())
+}
+
+model Event {
+  id         Int      @id @default(autoincrement())
+  bastionId  Int
+  bastion    Bastion  @relation(fields: [bastionId], references: [id], onDelete: Cascade)
+  title      String
+  occurredAt DateTime @default(now())
+}
+
+model Turn {
+  id         Int      @id @default(autoincrement())
+  bastionId  Int
+  bastion    Bastion  @relation(fields: [bastionId], references: [id], onDelete: Cascade)
+  number     Int
+  resolved   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Log {
+  id         Int      @id @default(autoincrement())
+  bastionId  Int
+  bastion    Bastion  @relation(fields: [bastionId], references: [id], onDelete: Cascade)
+  message    String
+  createdAt  DateTime @default(now())
 }
