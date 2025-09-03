@@ -1,58 +1,49 @@
-// FILE: app/dashboard/tabs/Facilities.tsx
+// FILE: app/dashboard/tabs/Bastions.tsx
 "use client";
-import useSWR from "swr";
-import { useState } from "react";
-import { jsonFetcher, postJSON } from "@/lib/fetcher";
 
-export default function FacilitiesTab({ bastion }: { bastion: any }) {
-  const { data, mutate } = useSWR(`/api/facilities?bastionId=${bastion.id}`, jsonFetcher);
-  const [name, setName] = useState("");
-  const [level, setLevel] = useState(1);
+import { KeyedMutator } from "swr";
 
-  async function create() {
-    if (!name.trim()) return;
-    await postJSON("/api/facilities", { bastionId: bastion.id, name: name.trim(), level: Number(level) });
-    setName("");
-    setLevel(1);
-    mutate();
-  }
+type Bastion = {
+  id: number;
+  name: string;
+  createdAt?: string;
+  // add any other fields you use
+};
 
+type Props = {
+  bastions: Bastion[];
+  selectedId: number | null;
+  onSelect: (id: number | null) => void;
+  refresh: KeyedMutator<any>;
+};
+
+export default function BastionsTab({
+  bastions,
+  selectedId,
+  onSelect,
+  refresh,
+}: Props) {
   return (
-    <section className="space-y-4">
-      <h2 className="text-xl font-bold">Facilities — {bastion.name}</h2>
-
-      <div className="bg-zinc-900 border border-zinc-800 p-4 rounded">
-        <h3 className="font-semibold mb-2">Add Facility</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <input
-            className="bg-zinc-950 border border-zinc-700 px-3 py-2 rounded"
-            placeholder="Name (e.g., War Room)"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            className="bg-zinc-950 border border-zinc-700 px-3 py-2 rounded"
-            type="number"
-            min={1}
-            value={level}
-            onChange={(e) => setLevel(parseInt(e.target.value || "1", 10))}
-          />
-          <button onClick={create} className="px-4 py-2 rounded bg-emerald-600 hover:bg-emerald-500">
-            Add
+    <div className="space-y-4">
+      <div className="grid gap-3">
+        {bastions.map((b) => (
+          <button
+            key={b.id}
+            onClick={() => onSelect(b.id)}
+            className={`rounded-xl border p-3 text-left ${
+              selectedId === b.id ? "border-purple-400" : "border-zinc-800/50"
+            }`}
+          >
+            <div className="font-semibold">{b.name}</div>
+            <div className="text-xs opacity-70">ID: {b.id}</div>
           </button>
-        </div>
+        ))}
       </div>
 
-      <div className="bg-zinc-900 border border-zinc-800 p-4 rounded">
-        <h3 className="font-semibold mb-2">List</h3>
-        <ul className="space-y-2">
-          {data?.map((f: any) => (
-            <li key={f.id} className="bg-zinc-950 border border-zinc-800 px-3 py-2 rounded">
-              {f.name} — Level {f.level}
-            </li>
-          )) || <p className="text-zinc-400">No facilities yet.</p>}
-        </ul>
-      </div>
-    </section>
+      {/* Example action that can call refresh() after a POST */}
+      {/* <button onClick={() => refresh()} className="rounded-lg border px-3 py-2">
+        Refresh
+      </button> */}
+    </div>
   );
 }
