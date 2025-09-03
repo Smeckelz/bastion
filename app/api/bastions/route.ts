@@ -3,8 +3,7 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-// Update the import path if the file is not at app/lib/auth.ts
-import { authOptions } from "../../lib/auth";
+import { authOptions } from "@/lib/auth";   // <-- use alias, not "../../lib/auth"
 import prisma from "@/lib/prisma";
 
 export async function GET() {
@@ -20,10 +19,14 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { name } = await req.json();
-  if (!name || name.length < 3) return NextResponse.json({ error: "Invalid name" }, { status: 400 });
+  if (!name || name.length < 3) {
+    return NextResponse.json({ error: "Invalid name" }, { status: 400 });
+  }
 
   const bastion = await prisma.bastion.create({
     data: { name, ownerId: session.user.id },
