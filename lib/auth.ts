@@ -1,4 +1,3 @@
-// FILE: lib/auth.ts
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
@@ -11,15 +10,13 @@ export const authOptions: NextAuthOptions = {
   ],
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, account, profile }) {
-      // token.sub is the user id for OAuth flows
-      // If you have a User table, you can look up your internal ID here and set token.uid
+    async jwt({ token }) {
+      // If you have your own DB id, set token.uid = dbUser.id here.
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        // put an ID on the session for your queries
-        (session.user as any).id = token.sub;
+        session.user.id = (token.uid as string) ?? (token.sub as string) ?? "";
       }
       return session;
     },
@@ -27,4 +24,3 @@ export const authOptions: NextAuthOptions = {
 };
 
 export const auth = () => getServerSession(authOptions);
-export type Session = Awaited<ReturnType<typeof auth>>;
