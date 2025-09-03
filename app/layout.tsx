@@ -1,7 +1,7 @@
 // FILE: app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import Providers from "@/app/components/Providers";
+import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Chronix",
