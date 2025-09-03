@@ -11,7 +11,7 @@ export default function FacilitiesTab({ bastion }: { bastion: any }) {
 
   async function create() {
     if (!name.trim()) return;
-    await postJSON("/api/facilities", { bastionId: bastion.id, name: name.trim(), level });
+    await postJSON("/api/facilities", { bastionId: bastion.id, name: name.trim(), level: Number(level) });
     setName("");
     setLevel(1);
     mutate();

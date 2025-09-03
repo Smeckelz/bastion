@@ -10,7 +10,7 @@ export default function TurnsTab({ bastion }: { bastion: any }) {
 
   async function add() {
     if (!number) return;
-    await postJSON("/api/turns", { bastionId: bastion.id, number });
+    await postJSON("/api/turns", { bastionId: bastion.id, number: Number(number) });
     setNumber((n) => n + 1);
     mutate();
   }
