@@ -1,5 +1,6 @@
 import './globals.css'
 import styles from './layout.module.css'
+import Providers from './providers'
 import { ReactNode } from 'react'
 
 export const metadata = {
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: "(function(){try{var l=document.querySelector('link[href=\"/tw.css\"]'); if(l) l.parentNode.removeChild(l);}catch(e){} })();" }} />
       </head>
       <body className={`${styles.body} ${styles.bgGradient}`}>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )
