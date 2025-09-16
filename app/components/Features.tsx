@@ -1,4 +1,6 @@
-import styles from './Features.module.css'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
 
 export default function Features() {
   const items = [
@@ -8,18 +10,18 @@ export default function Features() {
   ]
 
   return (
-    <section className={styles.section}>
-      <h2 className={styles.heading}>Features</h2>
-      <p className={styles.lead}>Tools to help you run cleaner sessions and preserve your world’s history.</p>
+    <Box component="section" sx={{ pt: 6, pb: 6 }}>
+      <Typography variant="h2" sx={{ fontSize: '1.5rem', fontWeight: 700, color: 'text.primary' }}>Features</Typography>
+      <Typography sx={{ mt: 1, color: 'text.secondary', maxWidth: '42rem' }}>Tools to help you run cleaner sessions and preserve your world’s history.</Typography>
 
-      <ul className={styles.grid}>
+      <Box sx={{ mt: 2, display: 'grid', gap: 2, gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: 'repeat(3, 1fr)' } }}>
         {items.map((it) => (
-          <li key={it.title} className={`${styles.card} ${styles.cardHover}`}>
-            <h3 className={styles.cardTitle}>{it.title}</h3>
-            <p className={styles.muted}>{it.desc}</p>
-          </li>
+          <Paper key={it.title} sx={{ p: 2, transition: 'box-shadow .15s' }} elevation={1}>
+            <Typography sx={{ fontSize: '1.125rem', fontWeight: 600, color: 'text.primary' }}>{it.title}</Typography>
+            <Typography sx={{ mt: 1, color: 'text.secondary' }}>{it.desc}</Typography>
+          </Paper>
         ))}
-      </ul>
-    </section>
+      </Box>
+    </Box>
   )
 }

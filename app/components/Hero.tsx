@@ -1,32 +1,35 @@
 "use client"
 import { signIn } from 'next-auth/react'
-import styles from './Hero.module.css'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import Image from 'next/image'
 
 export default function Hero() {
   return (
-    <section className={styles.heroSection}>
-      <div className={styles.gridTwo}>
-        <div>
-          <h1 className={styles.title}>Chronix</h1>
-          <p className={styles.subtitle}>Track Bastions, browse the World Codex, and generate session recaps — all in one place. Built for storytellers and keepers of lore.</p>
+    <Box component="section" sx={{ pt: 8, pb: 6 }}>
+      <Box sx={{ display: 'grid', gap: 3, alignItems: 'center', gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' } }}>
+        <Box>
+          <Typography variant="h1" component="h1" sx={{ fontSize: '2.25rem', fontWeight: 800, color: 'text.primary' }}>
+            Chronix
+          </Typography>
+          <Typography variant="body1" sx={{ mt: 1, color: 'text.secondary', maxWidth: '36rem' }}>
+            Track Bastions, browse the World Codex, and generate session recaps — all in one place. Built for storytellers and keepers of lore.
+          </Typography>
 
-          <div className={styles.actions}>
-            <button
-              onClick={() => signIn('discord')}
-              className={styles.btn}
-            >
-              Sign in with Discord
-            </button>
-            <a href="#preview" className={styles.linkSmall}>See preview</a>
-          </div>
-        </div>
+          <Box sx={{ mt: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Button variant="contained" color="primary" onClick={() => signIn('discord')}>Sign in with Discord</Button>
+            <Link href="#preview" underline="none" color="text.secondary">See preview</Link>
+          </Box>
+        </Box>
 
-        <div className={styles.heroGraphicWrap}>
-          <div className={styles.heroCard}>
-            <img src="/logo.svg" alt="Chronix logo" width={160} height={160} className={styles.contain} />
-          </div>
-        </div>
-      </div>
-    </section>
+        <Box sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'flex-end' } }}>
+          <Box sx={{ width: 160, height: 160, borderRadius: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 3, bgcolor: 'background.paper' }}>
+            <Image src="/logo.svg" alt="Chronix logo" width={160} height={160} />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   )
 }

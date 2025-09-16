@@ -1,30 +1,32 @@
-import styles from './Preview.module.css'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
 
 export default function Preview() {
   return (
-    <section id="preview" className={styles.previewSection}>
-      <h2 className={styles.heading}>Bastion Tracker Preview</h2>
-      <p className={styles.lead}>A quick look at rooms, hirelings, and tools you’d use during a session.</p>
+    <Box component="section" id="preview" sx={{ pt: 6, pb: 6 }}>
+      <Typography variant="h2" sx={{ fontSize: '1.5rem', fontWeight: 700, color: 'text.primary' }}>Bastion Tracker Preview</Typography>
+      <Typography sx={{ mt: 1, color: 'text.secondary', maxWidth: '42rem' }}>A quick look at rooms, hirelings, and tools you’d use during a session.</Typography>
 
-      <div className={`${styles.gridTwo} mt-6`}>
-        <div className={styles.card}>
-          <h3 className={styles.cardTitle}>Rooms & Hirelings</h3>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>The Fallen Keep — Occupied (3 NPCs)</li>
-            <li className={styles.listItem}>Sable Market — Busy (traders)</li>
-            <li className={styles.listItem}>Gloom Cavern — Hazards reported</li>
-          </ul>
-        </div>
+      <Box sx={{ display: 'grid', gap: 2, mt: 3, gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' } }}>
+        <Paper sx={{ p: 2 }} elevation={1}>
+          <Typography sx={{ fontWeight: 600, color: 'text.primary' }}>Rooms &amp; Hirelings</Typography>
+          <Box component="ul" sx={{ mt: 1, color: 'text.secondary', pl: 2 }}>
+            <li>The Fallen Keep — Occupied (3 NPCs)</li>
+            <li>Sable Market — Busy (traders)</li>
+            <li>Gloom Cavern — Hazards reported</li>
+          </Box>
+        </Paper>
 
-        <div className={styles.card}>
-          <h3 className={styles.cardTitle}>Bastion Tools</h3>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>Timeline — Jump to events</li>
-            <li className={styles.listItem}>Map pins — Quick teleport</li>
-            <li className={styles.listItem}>NPC notes — Private / shared</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        <Paper sx={{ p: 2 }} elevation={1}>
+          <Typography sx={{ fontWeight: 600, color: 'text.primary' }}>Bastion Tools</Typography>
+          <Box component="ul" sx={{ mt: 1, color: 'text.secondary', pl: 2 }}>
+            <li>Timeline — Jump to events</li>
+            <li>Map pins — Quick teleport</li>
+            <li>NPC notes — Private / shared</li>
+          </Box>
+        </Paper>
+      </Box>
+    </Box>
   )
 }

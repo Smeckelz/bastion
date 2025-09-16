@@ -1,5 +1,4 @@
 import './globals.css'
-import styles from './layout.module.css'
 import Providers from './providers'
 import { ReactNode } from 'react'
 
@@ -18,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* Runtime safeguard: remove any stale /tw.css link that may be served by an older cached HTML */}
         <script dangerouslySetInnerHTML={{ __html: "(function(){try{var l=document.querySelector('link[href=\"/tw.css\"]'); if(l) l.parentNode.removeChild(l);}catch(e){} })();" }} />
       </head>
-      <body className={`${styles.body} ${styles.bgGradient}`}>
+      <body>
         <Providers>
           {children}
         </Providers>
