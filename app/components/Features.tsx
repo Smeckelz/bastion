@@ -1,3 +1,5 @@
+import styles from './Features.module.css'
+
 export default function Features() {
   const items = [
     { title: 'Bastion Tracking', desc: 'Monitor rooms, hirelings, and events with a lightweight map-driven UI.' },
@@ -6,15 +8,15 @@ export default function Features() {
   ]
 
   return (
-    <section className="py-12">
-      <h2 className="text-2xl font-bold text-gray-900">Features</h2>
-      <p className="mt-2 text-gray-600 max-w-2xl">Tools to help you run cleaner sessions and preserve your world’s history.</p>
+    <section className={styles.section}>
+      <h2 className={styles.heading}>Features</h2>
+      <p className={styles.lead}>Tools to help you run cleaner sessions and preserve your world’s history.</p>
 
-      <ul className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <ul className={styles.grid}>
         {items.map((it) => (
-          <li key={it.title} className="rounded-xl bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-            <h3 className="text-lg font-semibold text-gray-900">{it.title}</h3>
-            <p className="mt-2 text-gray-600">{it.desc}</p>
+          <li key={it.title} className={`${styles.card} ${styles.cardHover}`}>
+            <h3 className={styles.cardTitle}>{it.title}</h3>
+            <p className={styles.muted}>{it.desc}</p>
           </li>
         ))}
       </ul>
