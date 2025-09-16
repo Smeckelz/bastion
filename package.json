@@ -1,0 +1,31 @@
+{
+  "name": "chronix",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "prisma:generate": "prisma generate",
+  "prisma:migrate": "prisma migrate dev --name init",
+  "vercel-build": "prisma migrate deploy && prisma generate && next build",
+  "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "6.10.0",
+    "autoprefixer": "10.4.14",
+    "next": "15.0.0",
+    "next-auth": "4.24.11",
+    "postcss": "8.4.24",
+    "prisma": "6.10.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^24.5.0",
+    "@types/react": "^19.1.13",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2"
+  }
+}
